@@ -41,6 +41,7 @@ def get_empty_space(board, row, column, num):
     return True
 print(np.matrix(BOARD), "\n")
      
+     
 def sudoku_solver(board):
     """
     *   Function to solve the Sudoku board and print the result
@@ -59,6 +60,7 @@ def sudoku_solver(board):
                 return 
             
     print(np.matrix(board))
+
 
 if __name__ == "__main__":
     print("Solved Sudoku Board")
