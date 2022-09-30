@@ -1,18 +1,35 @@
 """
-Substitution Cipher using english words from the Natural Language Toolkit (NLTK) Python library
+Substitution Cipher
     -   Substitution Cipher is a way of hiding messages
     -   This method involves creating a hidden coding scheme, whereas a randomly selected letter is substituted
         for each original letter
 """
 
 from permutations import get_permutations
-from dictionary_words import ENGLISH_WORDS
 
 
 VOWELS_LOWER = 'aeiou'
 VOWELS_UPPER = 'AEIOU'
 CONSONANTS_LOWER = 'bcdfghjklmnpqrstvwxyz'
 CONSONANTS_UPPER = 'BCDFGHJKLMNPQRSTVWXYZ'
+
+WORDLIST_FILENAME = 'words.txt'
+
+
+def load_words(file_name):
+    """   
+    Returns: a list of valid words. Words are strings of lowercase letters.
+    """
+    
+    print("Loading word list from file...")
+    # inFile: file
+    inFile = open(file_name, 'r')
+    # wordlist: list of strings
+    wordlist = []
+    for line in inFile:
+        wordlist.extend([word.lower() for word in line.split(' ')])
+    print("  ", len(wordlist), "words loaded.")
+    return wordlist
 
 
 def is_word(word_list, word):
@@ -22,6 +39,7 @@ def is_word(word_list, word):
     -   Returns True if word is in word_list, and False otherwise
     """    
     word = word.lower()
+    word = word.strip(" !@#$%^&*()-_+={}[]|:;'<>?,./")
     return word in word_list
 
 
@@ -35,7 +53,7 @@ class SubMessage(object):
             self.valid_words (list of english words from NLTK library)
         '''
         self.message_text = text
-        self.valid_words = ENGLISH_WORDS
+        self.valid_words = load_words(WORDLIST_FILENAME)
         
     def get_message_text(self):
         '''
@@ -135,11 +153,10 @@ class EncryptedSubMessage(SubMessage):
 
 if __name__ == "__main__":
     print("Loading list of words...")
-    print(len(ENGLISH_WORDS), "words loaded\n")
     msg = SubMessage("Hello World!")
     permutation = "eaiuo"
     enc_dict = msg.build_transpose_dict(permutation)
-    print("Original message:", msg.get_message_text(), "\nPermutation:", permutation)
+    print("\nOriginal message:", msg.get_message_text(), "\nPermutation:", permutation)
     print("Expected encryption:", "Hallu Wurld!")
     print("Actual encryption:", msg.apply_transpose(enc_dict))
     enc_message = EncryptedSubMessage(msg.apply_transpose(enc_dict))

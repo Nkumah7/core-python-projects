@@ -25,23 +25,23 @@ def test_build_transpose_dict():
 def test_apply_transpose():
     msg1 = SubMessage("Hello World!")
     enc_dict1 = msg1.build_transpose_dict("eaiuo")
-    msg1.apply_transpose(enc_dict1) == "Hallu Wurld!"
+    assert msg1.apply_transpose(enc_dict1) == "Hallu Wurld!"
     
     msg2 = SubMessage("The Third")
     enc_dict2 = msg2.build_transpose_dict("oaeui")
-    msg2.apply_transpose(enc_dict2) == "Tha Therd"
+    assert msg2.apply_transpose(enc_dict2) == "Tha Therd"
     
     msg3 = SubMessage("One of the greatest!")
     enc_dict3 = msg3.build_transpose_dict("iuaeo")
-    msg3.apply_transpose(enc_dict3) == "Enu ef thu gruitust!"
+    assert msg3.apply_transpose(enc_dict3) == "Enu ef thu gruitust!"
     
 
 def test_decrypt_message():
     enc_msg1 = EncryptedSubMessage("Hallu Wurld!")
-    enc_msg1.decrypt_message() == "Hello World!"
+    assert enc_msg1.decrypt_message() == "Hello World!"
     
     enc_msg2 = EncryptedSubMessage("Tha Therd")
-    enc_msg2.decrypt_message() == "The Third"
+    assert enc_msg2.decrypt_message() == "The Third"
     
     enc_msg3 = EncryptedSubMessage("Enu ef thu gruitust!")
-    enc_msg3.decrypt_message() == "One of the greatest!"
+    assert enc_msg3.decrypt_message() == "One of the greatest!"
